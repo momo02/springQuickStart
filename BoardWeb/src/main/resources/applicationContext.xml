@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	
+	<!-- SamsungTV클래스를 스프링 설정 파일에 등록 -->
+	<!-- bean 엘리먼트에서 가장 중요한 것은 class 속성값. 여기에 패키지 경로가 포함된 전체 클래스 경로를 지정 -->
+	<!-- <bean id="tv" class="day01.class03.step1_2.polymorphism.SamsungTV" /> -->
+	
+	<!-- class속성만 사용해도 객체가 생성되는지 확인 -->	
+	<!-- <bean class="day01.class03.step1_2.polymorphism.SamsungTV" /> -->
+
+	<!-- 스프링 컨테이너는 <bean>에 등록된 클래스 객체를 생성한 후에,
+			init-method속성으로 지정된 initMethod() 메서드를 호출. (이 메소드에서 멤버변수에 대한 초기화 작업을 처리)
+			destroy-method속성으로 스프링 컨테이너가 객체를 삭제하기 직전에 호출될 메서드 지정.
+			-->
+	<bean id="tv" class="day01.class03.step1_2.polymorphism.SamsungTV" init-method="initMethod"  destroy-method="destroyMethod" /> <!-- lazy-init="true" --> <!--  scope="prototype" -->
+
+	
+</beans>
