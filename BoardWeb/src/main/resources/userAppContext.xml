@@ -15,11 +15,11 @@
 	<!-- property name : UserServiceImpl클래스의  set + 메소드명 의 메소드명과 같아야함 
 		     ex) 메소드 명이 setUserDAO이면 userDAO. -->
 	<!-- property ref :  주입할 클래스 빈의 id와 같아야함  -->
-	<bean id="userService" class="com.springbook.biz.user.impl.UserServiceImpl">
+<!-- <bean id="userService" class="com.springbook.biz.user.impl.UserServiceImpl">
 		<property name="userDAO" ref="userDAO"></property> 
 	</bean>
 	
-	<bean id="userDAO" class="com.springbook.biz.user.impl.UserDAO" />
+	<bean id="userDAO" class="com.springbook.biz.user.impl.UserDAO" /> -->
 
 
 </beans>

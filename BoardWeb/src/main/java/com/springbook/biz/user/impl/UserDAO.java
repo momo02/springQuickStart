@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.springframework.stereotype.Repository;
+
 import com.springbook.biz.common.JDBCUtil;
 import com.springbook.biz.user.UserVO;
 
 //DAO(Data Access Object)
-// 정상적인 <bean>등록으로 객체를 생성할 예정이므로 어노테이션은 설정하지 않는다.
+@Repository("userDAO")
 public class UserDAO {
 	//JDBC 관련 변수
 		private Connection conn = null;
