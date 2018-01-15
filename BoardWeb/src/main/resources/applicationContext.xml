@@ -2,42 +2,24 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
-	
-	<!-- SamsungTV클래스를 스프링 설정 파일에 등록 -->
-	<!-- bean 엘리먼트에서 가장 중요한 것은 class 속성값. 여기에 패키지 경로가 포함된 전체 클래스 경로를 지정 -->
-	<!-- <bean id="tv" class="day01.class03.step1_2.polymorphism.SamsungTV" /> -->
-	
-	<!-- class속성만 사용해도 객체가 생성되는지 확인 -->	
-	<!-- <bean class="day01.class03.step1_2.polymorphism.SamsungTV" /> -->
+ 
+	<context:component-scan base-package="com.springbook.biz"></context:component-scan>
+	<!-- base-package로 시작하는 모든 패키지를 스캔 대상에 포함. -->
 
-	<!-- 스프링 컨테이너는 <bean>에 등록된 클래스 객체를 생성한 후에, init-method속성으로 지정된 initMethod() 메서드를 호출.(이 메소드에서 멤버변수에 대한 초기화 작업을 처리)
-			destroy-method속성으로 스프링 컨테이너가 객체를 삭제하기 직전에 호출될 메서드 지정.-->
-			
-			
-	<!-- day01.class02~03 -->		
-	<!-- <bean id="tv" class="day01.class03.step1_2.polymorphism.SamsungTV" init-method="initMethod"  destroy-method="destroyMethod" />  -->
+	<bean id="log" class="com.springbook.biz.common.Log4jAdvice"></bean>
 	
+	<aop:config>	
+		 <aop:pointcut id="allPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))" />
+		 <aop:pointcut id="getPointcut" expression="execution(* com.springbook.biz..*Impl.get*(..))" />
+		 <aop:aspect ref="log">
+		 	<aop:after pointcut-ref="getPointcut" method="printLogging" />
+		 </aop:aspect>
+	 </aop:config>	
 	
-	<!-- day01.class04 생성자 인젝션 이용 -->
-<!--<bean id="tv" class="day01.class04.polymorphism.SamsungTV">
-		<constructor-arg index="0" ref="apple"></constructor-arg> TV가 사용하는 스피커객체를 설정파일에서 쉽게 변경 가능.
-		<constructor-arg index="1" value="2700000"></constructor-arg>
-	</bean>	
- 	-->
-	
-	<!-- day01.class04 Setter 인젝션 이용 -->
-<!--<bean id="tv" class="day01.class04.polymorphism.SamsungTV">
-		<property name="speaker" ref="apple"></property> TV가 사용하는 스피커객체를 설정파일에서 쉽게 변경 가능.
-		<property name="price" value="2700000"></property>
-	</bean>	 -->
-
-	<!-- day01.class04 Setter 인젝션 이용 > p네임스페이스 사용.  -->
-	<bean id="tv" class="day01.class04.polymorphism.SamsungTV" p:speaker-ref="sony" p:price="2700000"/>
-	
-	<bean id="sony" class="day01.class04.polymorphism.SonySpeaker"></bean> 
-	<bean id="apple" class="day01.class04.polymorphism.AppleSpeaker"></bean>
-
-
 </beans>
