@@ -1,8 +1,8 @@
 package com.springbook.biz.board.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+//import java.sql.Connection;
+//import java.sql.PreparedStatement;
+//import java.sql.ResultSet;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -20,9 +20,9 @@ public class BoardDAOSpring extends JdbcDaoSupport {
 	//메소드를 호출하면 JdbcTemplate객체가 리턴되어 모든 메소드를 jdbcTemplate객체로 구현 가능.
 	
 	//JDBC 관련 변수
-	private Connection conn = null;
-	private PreparedStatement stmt = null;
-	private ResultSet rs = null;
+	//private Connection conn = null;
+	//private PreparedStatement stmt = null;
+	//private ResultSet rs = null;
 	
 	//SQL 명령어들 
 	private final String BOARD_INSERT = "insert into board(seq,title,writer,content) values((select nvl(max(seq),0)+1 from board),?,?,?)";

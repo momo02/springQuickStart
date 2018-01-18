@@ -9,13 +9,32 @@
       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
     <!-- base-package로 시작하는 모든 패키지를 스캔 대상에 포함. -->
-
    <context:component-scan base-package="com.springbook.biz"></context:component-scan>
-   
-   <!-- 어노테이션 기반 AOP 설정 -->
-   <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
-   <!-- 선언만 하면 스프링 컨테이너는 AOP관련 어노테이션들을 인식하고 용도에 맞게 처리 -->
-      
-   
-</beans>
 
+  	<!-- 어노테이션 기반 AOP 설정 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<!-- 선언만 하면 스프링 컨테이너는 AOP관련 어노테이션들을 인식하고 용도에 맞게 처리 -->
+    
+    
+    <!-- DataSource 설정 -->
+   <!--  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+          <property name="driverClassName" value="org.h2.Driver" /> 연결에 필요한 property들을 Setter인젝션으로 설정.
+          <property name="url" value="jdbc:h2:tcp://localhost/~/test" />
+          <property name="username" value="sa" />
+          <property name="password" value="" />
+    </bean>  -->
+    
+    
+    <!-- 프로퍼티 파일의 위치 등록 -->
+    <context:property-placeholder location="classpath:config/database.properties" />
+    
+    <!-- Properties파일에 설정된 프로퍼티들을 이용하여 DataSource를 설정. -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+          <property name="driverClassName" value="${jdbc.driver}" /> 
+          <property name="url" value="${jdbc.url}" />
+          <property name="username" value="${jdbc.username}" />
+          <property name="password" value="${jdbc.password}" />
+    </bean> 
+    
+    
+</beans>
