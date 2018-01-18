@@ -41,6 +41,33 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 				
+		<!-- Spring Jdbc -->	
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jdbc</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>		
+				
+		<!-- DBCP -->		
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>		
+		
+		<!-- Spring Transaction -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-tx</artifactId>
+		    <version>3.0.0.RELEASE</version>
+		</dependency>
+		<!-- cf. 
+		더 높은(이후) 버전 사용하면 JdbcDaoSupport의 getJdbcTemplate().~~ 사용시 에러 발생 
+ 				: The type org.springframework.dao.DataAccessException cannot be resolved. It is indirectly referenced from required .class files
+		해결 => 3.0.0.RELEASE 버전으로 변경 후 해결. In spring 3 the whole jar structure has been re-organized. 
+		There is no all-in-one spring.jar as before. 
+		You have to pick what you need. DataAccessException is in org.springframework.transaction-3.0.0.RELEASE.jar -->
+				
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
