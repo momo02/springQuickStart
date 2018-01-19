@@ -21,7 +21,9 @@ public class BoardServiceImpl implements BoardService{
 		//if(vo.getSeq()==0){
 		//	throw new IllegalArgumentException("0번 글은 등록할 수 없습니다.");
 		//}
+		//트랜잭션 테스트. 똑같은 seq(키)값 insert시 에러(예외)발생.=>전부 rollback처리되어 모두 insert처리 안됨.
 		boardDAO.insertBoard(vo);
+		boardDAO.insertBoard(vo); 
 	}
 
 	@Override

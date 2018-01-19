@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xmlns:p="http://www.springframework.org/schema/p"
-   xmlns:context="http://www.springframework.org/schema/context"
-   xmlns:aop="http://www.springframework.org/schema/aop"
-   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
-      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
     <!-- base-package로 시작하는 모든 패키지를 스캔 대상에 포함. -->
    <context:component-scan base-package="com.springbook.biz"></context:component-scan>
@@ -41,5 +43,27 @@
     	<property name="dataSource" ref="dataSource" /> <!-- 반드시  JdbcTemplate객체에 DataSource객체를 의존성 주입해야함. -->
     </bean>
     
+    
+    <!-- transation 설정 (DataSourceTransationManager(트랜잭션 관리자)클래스를 bean등록 )-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="dataSource"></property>
+    </bean>
+    
+    <!-- 트랜잭션 관리 기능의 어드바이스는  <tx:advice>엘리먼트를 사용하여 설정.(tx네임스페이스 추가) -->
+    <!-- 기존 어드바이스와 달리 우리가 직접 구현하지 않으며, 스프링 컨테이너가 이 설정을 참조하여 자동으로 생성.-->
+    <tx:advice id="txAdvice" transaction-manager="txManager"> <!-- 어드바이스 객체가 사용할 트랜잭션 관리자를 지정 -->
+    	<tx:attributes>
+    		<!-- 트랜잭션을 적용할 메소드를 지정 -->
+    		<tx:method name="get" read-only="true"/> <!-- 읽기 전용으로 처리. 트랜잭션 관리 대상에서 제외 -->
+    		<tx:method name="*"/>
+    	</tx:attributes>
+    </tx:advice>
+    
+    <!-- AOP설정을 통한 트랜잭션 적용 -->
+    <aop:config>
+    	<aop:pointcut id="txPointcut" expression="execution(* com.springbook.biz..*(..))" />
+    	
+    	<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>
+    </aop:config>
     
 </beans>

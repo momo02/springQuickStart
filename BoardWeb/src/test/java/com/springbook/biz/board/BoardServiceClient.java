@@ -15,6 +15,7 @@ public class BoardServiceClient {
 		
 		//3. 글 등록 기능 테스트
 		BoardVO vo = new BoardVO();
+		vo.setSeq(100); //트랜잭션 테스트 
 		vo.setTitle("임시 제목");
 		vo.setWriter("홍길동");
 		vo.setContent("내용......................");
