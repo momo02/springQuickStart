@@ -35,28 +35,28 @@ public class BoardController {
 	
 	//글 등록
 	@RequestMapping(value="/insertBoard.do")
-	public String insertBoard(BoardVO vo, BoardDAO boardDAO){
+	public String insertBoard(BoardVO vo){
 		boardService.insertBoard(vo);
 		return "redirect:getBoardList.do";
 	}
 	
 	//글 수정
 	@RequestMapping("/updateBoard.do")
-	public String updateBoard(@ModelAttribute("board") BoardVO vo,BoardDAO boardDAO) {
+	public String updateBoard(@ModelAttribute("board") BoardVO vo) {
 		boardService.updateBoard(vo);
 		return "getBoardList.do";
 	}
 	
 	//글 삭제
 	@RequestMapping("/deleteBoard.do")
-	public String deleteBoard(BoardVO vo,BoardDAO boardDAO) {
+	public String deleteBoard(BoardVO vo) {
 		boardService.deleteBoard(vo);
 		return "getBoardList.do";
 	}
 	
 	//글 상세 조회
 	@RequestMapping("/getBoard.do")
-	public String getBoard(BoardVO vo,BoardDAO boardDAO, Model model) {
+	public String getBoard(BoardVO vo,Model model) {
 		model.addAttribute("board", boardService.getBoard(vo)); 
 		return "getBoard.jsp"; 
 	}
@@ -64,11 +64,10 @@ public class BoardController {
 	
 	//글 목록 조회
 	@RequestMapping("/getBoardList.do")
-	public String getBoardList(@RequestParam(value="searchCondition",required=false) String condition,
-							   @RequestParam(value="searchKeyword",required=false) String keyword,
-							   BoardVO vo, BoardDAO boardDAO, Model model) {
-		//System.out.println("검색 조건 : " + condition);
-		//System.out.println("검색 단어 : " + keyword);
+	public String getBoardList(BoardVO vo, Model model) {
+		//null check
+		if(vo.getSearchCondition() == null) vo.setSearchCondition("TITLE");
+		if(vo.getSearchKeyword() == null) vo.setSearchKeyword("");
 		model.addAttribute("boardList", boardService.getBoardList(vo)); 
 		return "getBoardList.jsp";
 	}
