@@ -2,6 +2,20 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   
   
+  <!-- src/main/resources 소스 폴더에 위치한 스프링 설정파일을 ContextLoaderListener가 읽어들이기위한 설정.. -->
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+ 	<param-value>classpath:applicationContext.xml</param-value>
+  </context-param>
+  
+  <!-- 비즈니스 컴포넌트들을 메모리에 생성하기위한 ContextLoaderListener 등록 -->
+  <!-- ContextLoaderListener는 클라이언트의 요청이 없이도 컨테이너가 구동될 때 Pre-Loading되는 객체 -->
+  <listener>
+  	<listener-class>
+  		org.springframework.web.context.ContextLoaderListener
+  	</listener-class>
+  </listener>
+  
   <filter>
   	<filter-name>characterEncoding</filter-name>
   	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -21,7 +35,10 @@
   <servlet>
     <servlet-name>action</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <init-param>
+    <init-param> <!-- 서블릿 초기화 파라미터 -->
+    <!-- 스프링 설정 파일의 위치,이름 변경
+    (default 설정 파일 위치는 web.xml파일과 동일한 위치,
+    	     설정 파일 이름은 서블릿 명 + '-servlet.xml' ) -->
     	<param-name>contextConfigLocation</param-name>
     	<param-value>/WEB-INF/config/presentation-layer.xml</param-value>
     </init-param>
