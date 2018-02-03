@@ -14,7 +14,8 @@ import com.springbook.biz.board.BoardVO;
 import com.springbook.biz.board.impl.BoardDAO;
 
 @Controller
-@SessionAttributes("board")
+@SessionAttributes("board") //Model에 "board"라는 이름으로 저장되는 데이터가 있다면 
+//그 데이터를 세션(HttpSession)에도 자동으로 저장하라는 설정
 public class BoardController {
 	
 	/* ModelAttribute가 설정된 메소드는 @RequestMapping이 적용된 메소드보다 먼저 호출.
@@ -39,6 +40,10 @@ public class BoardController {
 	//글 수정
 	@RequestMapping("/updateBoard.do")
 	public String updateBoard(@ModelAttribute("board") BoardVO vo,BoardDAO boardDAO) {
+		// @ModelAttribute("board")설정을 해석하여 세션에 "board"라는 이름으로 저장된 데이터가 있는지를 확인.
+		// 있으면 1.해당 객체를 세션에서 꺼내서 매개변수로 선언된 vo변수에 할당.
+		// 2.사용자가 입력한 파라미터값을 vo객체에 할당.
+		// ==> 사용자가 입력한 값만 새롭게 할당되고, 나머지는 상세보기를 했을때("/getBoard.do") 세션에 저장된 데이터가 유지 
 		System.out.println("번호 : " + vo.getSeq());
 		System.out.println("제목 : " + vo.getTitle());
 		System.out.println("작성자  : " + vo.getWriter());
