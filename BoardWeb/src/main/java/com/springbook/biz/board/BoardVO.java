@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 //VO(Value Object)
 public class BoardVO {
 	private int seq;
@@ -52,18 +54,23 @@ public class BoardVO {
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}
+	@JsonIgnore // MappingJackson2HttpMessageConverter변환기에 의한 JSON 변환 시, 
+	 			// 출력 결과에서 특정 값을 제외하기 위한 어노테이션 설정.
+	//변수 위에 설정하지않고 Getter메소드 위에 설정.
 	public String getSearchCondition() {
 		return searchCondition;
 	}
 	public void setSearchCondition(String searchCondition) {
 		this.searchCondition = searchCondition;
 	}
+	@JsonIgnore
 	public String getSearchKeyword() {
 		return searchKeyword;
 	}
 	public void setSearchKeyword(String searchKeyword) {
 		this.searchKeyword = searchKeyword;
 	}
+	@JsonIgnore
 	public MultipartFile getUploadFile() {
 		return uploadFile;
 	}

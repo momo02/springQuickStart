@@ -10,6 +10,10 @@
 
 	<context:component-scan base-package="com.springbook.view"></context:component-scan>
 	
+	<!-- 스프링 설정 파일에 mvc:annotataion-driven을 설정하면 HttpMessageConverter를 구현한 모든 변환기가 생성. -->
+	<!--  MappingJackson2HttpMessageConverter 변환기도 생성.. -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+	
 	<!-- 파일 업로드 설정 -->
 	<!-- 해당 객체가 없으면 스프링 컨테이너는 MultipartFile객체를 생성할 수 없다.  -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
