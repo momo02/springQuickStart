@@ -8,7 +8,6 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-
 	<context:component-scan base-package="com.springbook.view"></context:component-scan>
 	
 	<!-- 파일 업로드 설정 -->
@@ -33,4 +32,31 @@
 		<property name="defaultErrorView"  value="common.error.jsp" />
 	</bean>
 	
+	<!-- 다국어 설정 -->
+	<!-- MessageSource 등록 -->
+	    <!-- 이름이  messageSource" 로 고정되어있다. 반드시 이 이름 사용.. -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>message.messageSource</value><!--확장자 '.properties'는 생략-->
+			</list>
+		</property>
+	</bean>
+	
+	<!--  LocaleResolver 등록 -->
+	<!-- 웹브라우저가 서버에 요청하면 브라우저의 Locale정보가 HTTP 요청 메시지 헤더에 자동으로 설정되어 전송됨.
+		 이때, 스프링은 LocaleResolver를 통해서 클라이언트의 Locale정보를 추출하고, 이 Locale정보에 해당하는 언어의 메시지를 적용.-->
+	 <!-- 이름이  localeResolver" 로 고정되어있다. 반드시 이 이름 사용.. -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"></bean>
+
+
+	<!-- LocaleChangeInterceptor 등록 -->
+	<!-- 특정언어로 화면을 보다가 해당 화면의 언어를 변경하고 싶을 때를 위해 스프링에서 제공하는 클래스 -->
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<!-- 클라이언트로부터 "lang"이라는 이름의 파라미터로 특정 Locale이 전송되면 해당 Locale로 변경하겠다는 설정. -->
+			<property name="paramName" value="lang"/>
+		</bean>
+	</mvc:interceptors>
+
 </beans>

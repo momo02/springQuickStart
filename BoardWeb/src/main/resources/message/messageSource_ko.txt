@@ -1,0 +1,24 @@
+# cf. 한국어를 포함한 중국어, 일본어 등의 아시아권 언어를 사용할 때는 반드시 "유니코드"로 변환하여 등록해야함.
+#     txt파일에 먼저 작성한 후 properties파일에 붙여 넣으면 간단하게 한글 프로퍼티 파일을 만들 수 있다.
+
+# login.jsp
+message.user.login.title = 로그인
+message.user.login.id = 아이디
+message.user.login.password = 비밀번호
+message.user.login.loginBtn = 로그인
+
+message.user.login.language.en = 영어
+message.user.login.language.ko = 한글
+
+# getBoardList.jsp
+message.board.list.mainTitle = 게시글 목록
+message.board.list.welcomeMsg =님! 게시판에 오신걸 환영합니다.
+message.board.list.search.condition.title = 제목
+message.board.list.search.condition.content = 내용
+message.board.list.search.condition.btn = 검색
+message.board.list.table.head.seq = 번호
+message.board.list.table.head.title = 제목
+message.board.list.table.head.writer = 작성자
+message.board.list.table.head.regDate = 등록일
+message.board.list.table.head.cnt = 조회수
+message.board.list.insertBoard = 새 글 등록
