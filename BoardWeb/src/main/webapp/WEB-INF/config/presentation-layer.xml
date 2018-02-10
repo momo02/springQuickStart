@@ -11,16 +11,26 @@
 
 	<context:component-scan base-package="com.springbook.view"></context:component-scan>
 	
-	<!-- @ExceptionHandler 어노테이션을 사용하기 위한 설정 -->
-	<mvc:annotation-driven></mvc:annotation-driven>
-	
-	
-	
 	<!-- 파일 업로드 설정 -->
 	<!-- 해당 객체가 없으면 스프링 컨테이너는 MultipartFile객체를 생성할 수 없다.  -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
 	<!-- CommonsMultipartResolver의 아이디 값은 반드시 "multipartResolver"를 사용해야함. -->
 		<property name="maxUploadSize" value="100000"></property>
+	</bean>
+
+	<!-- XML기반 예외 처리 설정 : SimpleMappingExceptionResolver클래스를 bean등록하기만 하면 된다.-->
+	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props> <!-- Properties 타입 매핑 -->
+				<prop key="java.lang.ArithmeticException"> <!-- key -->
+					common/arithmeticError.jsp <!-- value -->
+				</prop>
+				<prop key="java.lang.NullPointerException">
+					common/nullPointError.jsp
+				</prop>
+			</props>
+		</property>
+		<property name="defaultErrorView"  value="common.error.jsp" />
 	</bean>
 	
 </beans>
