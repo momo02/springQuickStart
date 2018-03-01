@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.springbook.biz.board.BoardListVO;
 import com.springbook.biz.board.BoardService;
 import com.springbook.biz.board.BoardVO;
 
@@ -83,10 +84,12 @@ public class BoardController {
 	
 	@RequestMapping(value="/dataTransform.do")
 	@ResponseBody //자바 객체를 Http 응답 프로토콜의 몸체로 변환하기 위해 사용.
-	public List<BoardVO> dataTransform(BoardVO vo){
+	public BoardListVO dataTransform(BoardVO vo){
 		vo.setSearchCondition("TITLE");
 		vo.setSearchKeyword("");
 		List<BoardVO> boardList = boardService.getBoardList(vo);
-		return boardList;
+		BoardListVO boardListVO = new BoardListVO();
+		boardListVO.setBoardList(boardList);
+		return boardListVO;
 	}
 }

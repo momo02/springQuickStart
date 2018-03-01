@@ -1,5 +1,6 @@
 package com.springbook.biz.board.impl;
 
+import java.util.Date;
 //import java.sql.Connection;
 //import java.sql.PreparedStatement;
 //import java.sql.ResultSet;
@@ -19,7 +20,7 @@ public class BoardDAOSpring{
 	private JdbcTemplate jdbcTemplate;
 	
 	//SQL 명령어들 
-	private final String BOARD_INSERT = "insert into board(seq,title,writer,content) values((select nvl(max(seq),0)+1 from board),?,?,?)";
+	private final String BOARD_INSERT = "insert into board(seq,title,writer,content,regdate) values((select nvl(max(seq),0)+1 from board),?,?,?,?)";
 	//private final String BOARD_INSERT = "insert into board(seq,title,writer,content) values(?,?,?,?)";  //트랜잭션 테스트 
 	private final String BOARD_UPDATE = "update board set title=?, content=? where seq=?";
 	private final String BOARD_DELETE = "delete board where seq=?";
@@ -32,7 +33,7 @@ public class BoardDAOSpring{
 	//글 등록 
 	public void insertBoard(BoardVO vo){
 		System.out.println("===> Spring JDBC로 insertBoard() 기능 처리"); 
-		jdbcTemplate.update(BOARD_INSERT, vo.getTitle(), vo.getWriter(), vo.getContent()); //트랜잭션 테스트 
+		jdbcTemplate.update(BOARD_INSERT, vo.getTitle(), vo.getWriter(), vo.getContent(), vo.getRegDate()); //트랜잭션 테스트 
 	}
 	
 	//글 수정
