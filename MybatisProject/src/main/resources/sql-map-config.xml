@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- Mybatis 메인 환경설정 파일 -->
+<!-- Mybatis는 이 파일을 읽어들여 어떤 DBMS와 커넥션을 맺을지, 어떤 SQL Mapper XML파일들이 등록되어 있는지 알 수 있다. -->
+<configuration>
+	<!-- Properties 파일 설정 -->
+	<!-- XML설정에서 사용할 프로퍼티를 선언하거나 외부 프로퍼티 파일을 참조할때 사용.
+		이렇게 선언된 프로퍼티는 "${프로퍼티 이름}"으로 참조하여 사용.
+	 -->
+	<properties resource="db.properties" />
+	
+	<!-- Aliase 설정 -->
+	<!-- SQL명령어들이 저장되는 Sql Mapper에서 사용할 수 있으며, 
+		이를 통해서 Sql Mapping 파일의 크기를 줄여주기도하고 설정을 간단히 처리할수도 있음-->
+	<typeAliases>
+		<typeAlias type="com.springbook.biz.board.BoardVO" alias="board"></typeAlias>
+	</typeAliases>
+	
+	<!-- DataSource 설정 -->
+	<!-- Mybatis는 특정 DBMS로부터 커넥션을 획득하고 DB연동을 처리하기 위해서 
+		반드시 DataSource 정보가 필요. -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driverClassName}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- Sql Mapper 설정 -->
+	<!--  이 mapper객체를 이용하여 SQL명령어들이 저장된 SQL파일들을 등록할 수 있다. -->
+	<mappers>
+		<mapper resource="mappings/board-mapping.xml" />
+	</mappers>
+</configuration>
