@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- persistence.xml파일은 JPA에서 메인 환경설정 파일 -->
+<persistence version="2.1" 
+			xmlns="http://xmlns.jcp.org/xml/ns/persistence" 
+		    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence 
+		    http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<!--  연동할 데이터베이스당 하나의 persistence-unit 을 등록-->
+	<persistence-unit name="JPAProject">
+		<!-- 엔티티 클래스 등록 -->
+		<class>com.springbook.biz.board.Board</class>
+		
+		<properties>
+			<!-- 필수 속성 (DB 커넥션 관련 설정)-->
+			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/> <!-- JDBC드라이버 클래스 -->
+			<property name="javax.persistence.jdbc.user" value="sa"/> <!-- 데이터베이스의 아이디 -->
+			<property name="javax.persistence.jdbc.password" value=""/> <!-- 데이터베이스의 비밀번호 -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/> <!-- JDBC URL 정보 -->
+			<!-- JPA는 특정 DBMS에 최적화된 SQL을 제공하기 위해서 DBMS마다 다른 Dialect클래스를 제공.
+			Dialect(사투리,방언의 의미)=> 이 Dialect클래스가 해당 DBMS에 최적화된 SQL구문을 생성한다. 
+			여기서는 H2데이터베이스를 사용하므로 H2Dialect클래스를 등록 -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+			
+			<!-- 옵션 (hibernate관련 속성 설정: 여기에서 사용할 JPA구현체가 hibernate 프레임워크이므로) -->
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
+			<property name="hibernate.use_sql_comments" value="false"/>
+			<property name="hibernate.id.new_generator_mappings" value="true"/>
+			<property name="hibernate.hbm2ddl.auto" value="create"/>
+		</properties>
+	
+	
+	</persistence-unit>
+</persistence>
