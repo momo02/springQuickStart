@@ -15,13 +15,17 @@ public class BoardServiceClient {
 		
 		//3. 글 등록 기능 테스트
 		BoardVO vo = new BoardVO();
-		vo.setTitle("임시 제목");
+		vo.setTitle("방금쓴글제목");
 		vo.setWriter("차은우");
 		vo.setContent("내용~~~");
 		boardService.insertBoard(vo);
 
 		//4. 글 목록 검색 기능 테스트
-		List<BoardVO> boardList = boardService.getBoardList(vo);
+		//검색 조건 설정
+		BoardVO vo1 = new BoardVO();
+		vo1.setSearchCondition("TITLE");
+		vo1.setSearchKeyword("방금쓴");
+		List<BoardVO> boardList = boardService.getBoardList(vo1);
 		for(BoardVO board : boardList){
 			System.out.println("---> " + board.toString());
 		}
