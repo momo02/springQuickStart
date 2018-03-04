@@ -36,13 +36,19 @@
     	<property name="dataSource" ref="dataSource" /> <!-- 반드시  JdbcTemplate객체에 DataSource객체를 의존성 주입해야함. -->
     </bean>
 
+	<!-- Spring과 Mybatis 연동 설정 -->
     <!-- SqlSessionFactoryBean객체로부터 DB 연동 구현에 사용할 SqlSession객체를 얻을 수 있다. -->  
     <!-- SqlSessionFactoryBean객체가 SqlSession객체를 생산하려면, 반드시 DataSource와 SQL Mapper정보가 필요.
-    	 앞에 등록된 dataSource 와  SQL Mapper가 등록된 sql-map-config.xml파일을 Setter인젝션으로 참조.  
-     -->  
+    	 앞에 등록된 dataSource와  SQL Mapper가 등록된 sql-map-config.xml파일(Mybatis 메인 환경설정 파일)을 Setter인젝션으로 참조. -->  
 	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation" value="classpath:sql-map-config.xml"></property>
+	</bean>
+	
+	<!-- SqlSessionTemplate클래스에는 Setter메소드가 없어서 Setter인젝션할 수 없음.
+	따라서 생성자 메소드를 이용한 Constructor주입으로 처리. -->
+	<bean class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sessionFactory"></constructor-arg>
 	</bean>
 	
     <!-- transation 설정 (DataSourceTransationManager(트랜잭션 관리자)클래스를 bean등록 )-->

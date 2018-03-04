@@ -52,10 +52,9 @@
 	<select id="getBoardList" resultMap="boardResult">
 		<![CDATA[
 		SELECT * FROM BOARD
-		WHERE TITLE LIKE '%'||#{searchKeyword}||'%'
 		ORDER BY SEQ DESC 
 		]]>
 	</select>
-
+	<!-- WHERE TITLE LIKE '%'||#{searchKeyword}||'%' -->
 
 </mapper>
