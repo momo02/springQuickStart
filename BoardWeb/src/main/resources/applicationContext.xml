@@ -18,18 +18,10 @@
 	<!-- 선언만 하면 스프링 컨테이너는 AOP관련 어노테이션들을 인식하고 용도에 맞게 처리 -->
     
     
-    <!-- DataSource 설정 -->
-   <!--  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-          <property name="driverClassName" value="org.h2.Driver" /> 연결에 필요한 property들을 Setter인젝션으로 설정.
-          <property name="url" value="jdbc:h2:tcp://localhost/~/test" />
-          <property name="username" value="sa" />
-          <property name="password" value="" />
-    </bean>  -->
-    
-    
     <!-- 프로퍼티 파일의 위치 등록 -->
     <context:property-placeholder location="classpath:config/database.properties" />
     
+    <!-- DataSource 설정 -->
     <!-- Properties파일에 설정된 프로퍼티들을 이용하여 DataSource를 설정. -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
           <property name="driverClassName" value="${jdbc.driver}" /> 
@@ -38,12 +30,21 @@
           <property name="password" value="${jdbc.password}" />
     </bean> 
     
+    
     <!-- jdbcTemplate클래스 bean등록 -->
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
     	<property name="dataSource" ref="dataSource" /> <!-- 반드시  JdbcTemplate객체에 DataSource객체를 의존성 주입해야함. -->
     </bean>
-    
-    
+
+    <!-- SqlSessionFactoryBean객체로부터 DB 연동 구현에 사용할 SqlSession객체를 얻을 수 있다. -->  
+    <!-- SqlSessionFactoryBean객체가 SqlSession객체를 생산하려면, 반드시 DataSource와 SQL Mapper정보가 필요.
+    	 앞에 등록된 dataSource 와  SQL Mapper가 등록된 sql-map-config.xml파일을 Setter인젝션으로 참조.  
+     -->  
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:sql-map-config.xml"></property>
+	</bean>
+	
     <!-- transation 설정 (DataSourceTransationManager(트랜잭션 관리자)클래스를 bean등록 )-->
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
     	<property name="dataSource" ref="dataSource"></property>
@@ -66,4 +67,8 @@
     	<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>
     </aop:config>
     
+    
+    
 </beans>
+
+

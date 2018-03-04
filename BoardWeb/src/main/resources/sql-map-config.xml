@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- Mybatis 메인 환경설정 파일 -->
+<!-- Mybatis는 이 파일을 읽어들여 어떤 DBMS와 커넥션을 맺을지, 어떤 SQL Mapper XML파일들이 등록되어 있는지 알 수 있다. -->
+<configuration>
+	<!-- Aliase 설정 -->
+	<!-- SQL명령어들이 저장되는 Sql Mapper에서 사용할 수 있으며, 
+		이를 통해서 Sql Mapping 파일의 크기를 줄여주기도하고 설정을 간단히 처리할수도 있음-->
+	<typeAliases>
+		<typeAlias type="com.springbook.biz.board.BoardVO" alias="board"></typeAlias>
+	</typeAliases>
+	
+	<!-- Sql Mapper 설정 -->
+	<!--  이 mapper객체를 이용하여 SQL명령어들이 저장된 SQL파일들을 등록할 수 있다. -->
+	<mappers>
+		<mapper resource="mappings/board-mapping.xml" />
+	</mappers>
+</configuration>
